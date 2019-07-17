@@ -1,0 +1,58 @@
+﻿@using Answer.Data
+@using Questions.Data
+@using StackOverFlow.Data
+@model ViewModel
+
+
+
+<h2><u>@Model.question.Title</u></h2>
+<h4>
+    Q:
+    @Model.question.Text
+</h4>
+
+@foreach (Tag t in Model.Tags)
+{
+    <span class="label label-primary">@t.Name</span>
+}
+
+<br />
+
+<h4>Answers:</h4>
+@foreach (Answers a in Model.answers)
+{
+    <div class="well">
+        <h4>@a.Text</h4>
+        <h5>Answered By: @a.User.Email</h5>
+    </div>
+}
+
+
+@if (Model.IsLoggedIn)
+{
+    <div class="well col-md-10">
+        <form action="/home/answer?questionid=@Model.question.Id" method="post">
+            <input type="hidden" name="questionid" value="@Model.question.Id" />
+            <input type="hidden" name="userid" value="@Model.user.id" />
+            <textarea name="text" rows="6" class="form-control"></textarea>
+            <button class=" btn btn-success">Answer</button>
+        </form>
+    </div>
+}
+
+<h4>
+    @if (Model.IsLoggedIn && Model.AlreadyLiked)
+    {
+        <button class="btn btn-danger" disabled>Like</button>
+    }
+    else if (Model.IsLoggedIn)
+    {
+        <button class="btn btn-danger" id="like-question" data-questionid=@Model.question.Id data-userid=@Model.user.id>Like</button>
+    }
+</h4>
+
+
+@section scripts{
+    <script src="~/js/index.js"></script>
+}
+

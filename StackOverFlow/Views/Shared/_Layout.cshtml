@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - StackOverFlow</title>
-
+    @RenderSection("styles", false)
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -30,9 +30,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Questions</a></li>
+                    <li><a asp-area="" asp-controller="user" asp-action="signupform">Sign Up</a></li>
+                    <li><a asp-area="" asp-controller="user" asp-action="loginform">Login</a></li>
+                    <li><a asp-area="" asp-controller="user" asp-action="loginform">Logout</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="questionform">Ask A Question</a></li>
                 </ul>
             </div>
         </div>
@@ -43,9 +45,6 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; 2019 - StackOverFlow</p>
-        </footer>
     </div>
 
     <environment include="Development">

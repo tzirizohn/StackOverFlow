@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +13,8 @@ namespace StackOverFlow
 {
     public class Startup
     {
+        public const string CookieScheme = "HI";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,6 +30,12 @@ namespace StackOverFlow
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            services.AddAuthentication(CookieScheme).AddCookie(CookieScheme, options =>
+            {
+                options.AccessDeniedPath = "/user/denied";
+                options.LoginPath = "/user/loginform";
             });
 
 
@@ -51,6 +58,7 @@ namespace StackOverFlow
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
